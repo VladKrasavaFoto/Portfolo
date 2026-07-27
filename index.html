@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dark Shibari · Fine Art Nude & Kinbaku</title>
+  <meta name="description" content="Fine art nude, boudoir та shibari фотографія. Конфіденційність та естетика."/>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header id="header">
+  <a href="#" class="logo">SHIBARI·NOIR</a>
+  <nav>
+    <a href="#portfolio">Фотосесії</a>
+    <a href="#about">Про мене</a>
+    <a href="#contact">Контакт</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-content">
+    <h1>DARK SHIBARI</h1>
+    <div class="subtitle">ТІЛО • МОТУЗКА • ТІНЬ</div>
+    <a href="#portfolio" class="btn">ПЕРЕГЛЯНУТИ РОБОТИ</a>
+    <a href="https://t.me/Foto_vladkrasava" class="btn btn-telegram">ЗАПИСАТИСЯ НА ЗЙОМКУ</a>
+  </div>
+</section>
+
+<section id="portfolio">
+  <h2>Фотосесії</h2>
+  <div class="sessions" id="sessions-grid">
+    <p style="grid-column:1/-1;text-align:center;color:#666">Завантаження…</p>
+  </div>
+</section>
+
+<section id="about">
+  <h2>Про мене</h2>
+  <div class="about-text">
+    <p>Я створюю образи, де мотузка стає продовженням тіла, а світло — мовою.</p>
+    <p>Кожна зйомка — це довіра, безпека та естетика без компромісів.</p>
+  </div>
+</section>
+
+<section id="contact">
+  <h2>Готові до зйомки?</h2>
+  <p class="contact-links">
+    <a href="https://t.me/Foto_vladkrasava">Telegram</a> • 
+    <a href="https://instagram.com/foto_vladkrasava">Instagram</a>
+  </p>
+</section>
+
+<footer>
+  Made with restraint © 2026
+</footer>
+
+<script src="data.js"></script>
+<script src="main.js"></script>
+<script>
+  (async () => {
+    const grid = document.getElementById('sessions-grid');
+    const manifest = await fetchManifest();
+    const entries = Object.entries(manifest.sessions || {});
+
+    if (!entries.length) {
+      grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:#666">Скоро тут з’являться нові роботи</p>';
+      return;
+    }
+
+    grid.innerHTML = entries.map(([sid, s]) => {
+      const cover = s.cover || (s.photos && s.photos[0]) || '';
+      return `
+        <a href="session.html?id=${encodeURIComponent(sid)}" class="session-card">
+          <img src="${cover}" alt="${s.title}" loading="lazy">
+          <div class="session-title">${s.title}</div>
+        </a>
+      `;
+    }).join('');
+  })();
+</script>
+<script src="//fbstore.sendpulse.com/loader.js" data-sp-widget-id="fb2a4961-cdbf-45dc-95e9-768c866317f5" async></script>
+</body>
+</html>
