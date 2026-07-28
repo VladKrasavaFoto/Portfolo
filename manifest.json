@@ -1,15 +1,5 @@
 {
   "sessions": {
-    "1": {
-      "title": "Марго",
-      "cover": "https://res.cloudinary.com/dufkhpzeg/image/upload/v1785224650/sessions/1/zsplkdcr9fwgpcuelntt.jpg",
-      "photos": [
-        "https://res.cloudinary.com/dufkhpzeg/image/upload/v1785224650/sessions/1/zsplkdcr9fwgpcuelntt.jpg",
-        "https://res.cloudinary.com/dufkhpzeg/image/upload/v1785224651/sessions/1/enjaynqk6ojf4rw5sfqt.jpg",
-        "https://res.cloudinary.com/dufkhpzeg/image/upload/v1785224653/sessions/1/yoaxxtlviscc14wdxmlb.jpg",
-        "https://res.cloudinary.com/dufkhpzeg/image/upload/v1785224654/sessions/1/tufnm0notqavhwodpwrn.jpg"
-      ]
-    },
     "2": {
       "title": "Аня",
       "cover": "https://res.cloudinary.com/dufkhpzeg/image/upload/v1785224193/sessions/2/l3sbjht82lztoqfjwcgq.webp",
