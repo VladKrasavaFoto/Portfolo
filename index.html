@@ -66,7 +66,12 @@
   (async () => {
     const grid = document.getElementById('sessions-grid');
     const manifest = await fetchManifest();
-    const entries = Object.entries(manifest.sessions || {});
+    const entries = Object.entries(manifest.sessions || {})
+      .sort((a, b) => {
+        const orderA = a[1].order !== undefined ? a[1].order : Number(a[0]);
+        const orderB = b[1].order !== undefined ? b[1].order : Number(b[0]);
+        return orderA - orderB;
+      });
 
     if (!entries.length) {
       grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:#666">Скоро тут з’являться нові роботи</p>';
