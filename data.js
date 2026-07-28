@@ -1,20 +1,26 @@
 // data.js
-// Спільна логіка отримання маніфесту сесій із Cloudinary.
-// Маніфест — це один JSON-файл на Cloudinary (resource_type=raw),
-// який admin.html перезаписує щоразу після заливки нової сесії.
+// Спільна логіка отримання маніфесту сесій.
+// Маніфест (manifest.json) лежить у тому ж GitHub-репозиторії, що й сайт.
+// admin.html (локально) оновлює цей файл через GitHub API.
+// Публічний сайт просто читає його як звичайний JSON-файл.
 
-const CLOUD_NAME = 'dufkhpzeg';
-const MANIFEST_PUBLIC_ID = 'site/manifest.json';
+const CLOUD_NAME = 'dufkhpzeg'; // Cloudinary — тільки для фото
 
-function manifestUrl() {
-  // ?t=... у кінці — щоб обійти кешування CDN і завжди отримати свіжу версію
-  return `https://res.cloudinary.com/${CLOUD_NAME}/raw/upload/${MANIFEST_PUBLIC_ID}?t=${Date.now()}`;
+const GITHUB_OWNER = 'VladKrasavaFoto';
+const GITHUB_REPO = 'Portfolo';
+const GITHUB_BRANCH = 'main';
+const MANIFEST_PATH = 'manifest.json';
+
+function manifestRawUrl() {
+  // raw.githubusercontent.com — публічний доступ, без токена.
+  // ?t=... обходить CDN-кеш, щоб сайт завжди бачив свіжі дані.
+  return `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}/${MANIFEST_PATH}?t=${Date.now()}`;
 }
 
 async function fetchManifest() {
   try {
-    const res = await fetch(manifestUrl());
-    if (!res.ok) return { sessions: {} }; // маніфесту ще нема — це нормально на старті
+    const res = await fetch(manifestRawUrl());
+    if (!res.ok) return { sessions: {} }; // манiфесту ще нема — це нормально на старті
     const data = await res.json();
     return data && data.sessions ? data : { sessions: {} };
   } catch (e) {
