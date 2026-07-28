@@ -1,3 +1,18 @@
 {
-  "sessions": {}
+  "sessions": {
+    "1": {
+      "title": "Марго",
+      "cover": "https://res.cloudinary.com/dufkhpzeg/image/upload/v1785240821/sessions/1/u0awadngfa0en3zzeian.webp",
+      "photos": [
+        "https://res.cloudinary.com/dufkhpzeg/image/upload/v1785240821/sessions/1/u0awadngfa0en3zzeian.webp",
+        "https://res.cloudinary.com/dufkhpzeg/image/upload/v1785240825/sessions/1/mp2uxg3duwvudxy63pzv.webp",
+        "https://res.cloudinary.com/dufkhpzeg/image/upload/v1785240829/sessions/1/q7grmd03rgveixmlv9g0.webp",
+        "https://res.cloudinary.com/dufkhpzeg/image/upload/v1785240834/sessions/1/qrhwc0kukkhovekdsqhq.webp",
+        "https://res.cloudinary.com/dufkhpzeg/image/upload/v1785240839/sessions/1/wfm4sxbvgyba9obh2fjn.jpg",
+        "https://res.cloudinary.com/dufkhpzeg/image/upload/v1785240844/sessions/1/lmddlgs3hmjiu9mkdnik.jpg",
+        "https://res.cloudinary.com/dufkhpzeg/image/upload/v1785240851/sessions/1/gbaictucjfun8lforj5e.jpg",
+        "https://res.cloudinary.com/dufkhpzeg/image/upload/v1785240856/sessions/1/jmu6js8hrwenoo5rriwl.jpg"
+      ]
+    }
+  }
 }
