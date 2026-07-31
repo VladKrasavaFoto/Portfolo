@@ -80,6 +80,36 @@ h1 {
   object-fit: cover;               /* для горизонтальних теж добре працює */
 }
 
+.gallery-item .video-thumb {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.gallery-item .video-thumb img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.gallery-item .video-thumb .play-icon {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3.2rem;
+  color: rgba(255,255,255,0.92);
+  text-shadow: 0 4px 20px rgba(0,0,0,0.85);
+  pointer-events: none;
+  transition: transform 0.3s;
+}
+
+.gallery-item:hover .video-thumb .play-icon {
+  transform: scale(1.12);
+}
+
 .gallery-item:hover {
   transform: scale(1.03);
   box-shadow: 0 15px 40px rgba(139,0,0,0.45);
@@ -132,6 +162,13 @@ h1 {
   max-width: 100%;
   max-height: 88vh;
   object-fit: contain;
+  border: 1px solid #222;
+  box-shadow: 0 0 80px rgba(0,0,0,0.9);
+}
+
+#lightbox-video {
+  max-width: 100%;
+  max-height: 88vh;
   border: 1px solid #222;
   box-shadow: 0 0 80px rgba(0,0,0,0.9);
 }

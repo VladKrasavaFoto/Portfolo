@@ -27,6 +27,30 @@ const id = urlParams.get('id');
     item.onclick = () => openLightbox(index);
     gallery.appendChild(item);
 
+    if (isVideoUrl(photoSrc)) {
+      const posterSrc = videoPosterUrl(photoSrc);
+      const probe = document.createElement('video');
+      probe.preload = 'metadata';
+      probe.src = photoSrc;
+
+      probe.onloadedmetadata = () => {
+        if (probe.videoWidth / probe.videoHeight > 1.35) item.classList.add('horizontal');
+        item.innerHTML = `
+          <div class="video-thumb">
+            <img src="${posterSrc}" alt="${session.title}" loading="lazy">
+            <div class="play-icon">▶</div>
+          </div>
+        `;
+        item.onclick = () => openLightbox(index);
+        item.style.opacity = '1';
+      };
+
+      probe.onerror = () => {
+        item.style.display = 'none';
+      };
+      return;
+    }
+
     const img = new Image();
     img.src = photoSrc;
 
@@ -50,7 +74,24 @@ const id = urlParams.get('id');
   }
 
   function updateLightbox() {
-    document.getElementById('lightbox-img').src = photos[currentIndex];
+    const src = photos[currentIndex];
+    const imgEl = document.getElementById('lightbox-img');
+    const videoEl = document.getElementById('lightbox-video');
+
+    videoEl.pause();
+    videoEl.removeAttribute('src');
+    videoEl.load();
+
+    if (isVideoUrl(src)) {
+      videoEl.src = src;
+      videoEl.style.display = 'block';
+      imgEl.style.display = 'none';
+    } else {
+      imgEl.src = src;
+      imgEl.style.display = 'block';
+      videoEl.style.display = 'none';
+    }
+
     document.getElementById('counter').textContent = `${currentIndex + 1} / ${photos.length}`;
   }
 
@@ -66,12 +107,14 @@ const id = urlParams.get('id');
 
   document.getElementById('close-btn').onclick = () => {
     document.getElementById('lightbox').classList.remove('active');
+    document.getElementById('lightbox-video').pause();
     document.body.style.overflow = '';
   };
 
   document.getElementById('lightbox').addEventListener('click', e => {
     if (e.target === document.getElementById('lightbox')) {
       document.getElementById('lightbox').classList.remove('active');
+      document.getElementById('lightbox-video').pause();
     }
   });
 

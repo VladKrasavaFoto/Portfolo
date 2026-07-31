@@ -12,9 +12,10 @@ const GITHUB_BRANCH = 'main';
 const MANIFEST_PATH = 'manifest.json';
 
 function manifestRawUrl() {
-  // raw.githubusercontent.com — публічний доступ, без токена.
-  // ?t=... обходить CDN-кеш, щоб сайт завжди бачив свіжі дані.
-  return `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}/${MANIFEST_PATH}?t=${Date.now()}`;
+  // Читаємо з власного домену сайту (Vercel), а не з GitHub raw CDN —
+  // так швидше й без зайвого кешування на боці GitHub.
+  // ?t=... обходить кеш браузера, щоб сайт завжди бачив свіжі дані.
+  return `manifest.json?t=${Date.now()}`;
 }
 
 async function fetchManifest() {
@@ -27,4 +28,17 @@ async function fetchManifest() {
     console.error('Не вдалося завантажити маніфест сесій:', e);
     return { sessions: {} };
   }
+}
+
+// --- Визначення типу медіа (фото/відео) прямо з Cloudinary-посилання ---
+// Маніфест не потребує окремого поля "type" — Cloudinary сам кладе
+// /video/upload/ або /image/upload/ у шлях залежно від типу файлу.
+
+function isVideoUrl(url) {
+  return typeof url === 'string' && url.includes('/video/upload/');
+}
+
+// Cloudinary вміє віддати кадр-прев'ю відео, якщо просто замінити розширення на .jpg
+function videoPosterUrl(url) {
+  return url.replace(/\.[a-zA-Z0-9]+(?=$|\?)/, '.jpg');
 }
