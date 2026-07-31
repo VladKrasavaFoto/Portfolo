@@ -17,54 +17,65 @@ const id = urlParams.get('id');
 
   let currentIndex = 0;
   const photos = session.photos || [];
-  const gallery = document.getElementById('session-gallery');
+  const backstage = session.backstage || [];
+  const allMedia = [...photos, ...backstage]; // для лайтбоксу — єдиний наскрізний список
 
-  photos.forEach((photoSrc, index) => {
-    const item = document.createElement('div');
-    item.className = 'gallery-item';
-    item.style.opacity = '0';
-    item.style.transition = 'opacity 0.4s ease';
-    item.onclick = () => openLightbox(index);
-    gallery.appendChild(item);
+  function renderGallery(items, galleryEl, indexOffset) {
+    items.forEach((src, localIndex) => {
+      const globalIndex = indexOffset + localIndex;
+      const item = document.createElement('div');
+      item.className = 'gallery-item';
+      item.style.opacity = '0';
+      item.style.transition = 'opacity 0.4s ease';
+      item.onclick = () => openLightbox(globalIndex);
+      galleryEl.appendChild(item);
 
-    if (isVideoUrl(photoSrc)) {
-      const posterSrc = videoPosterUrl(photoSrc);
-      const probe = document.createElement('video');
-      probe.preload = 'metadata';
-      probe.src = photoSrc;
+      if (isVideoUrl(src)) {
+        const posterSrc = videoPosterUrl(src);
+        const probe = document.createElement('video');
+        probe.preload = 'metadata';
+        probe.src = src;
 
-      probe.onloadedmetadata = () => {
-        if (probe.videoWidth / probe.videoHeight > 1.35) item.classList.add('horizontal');
-        item.innerHTML = `
-          <div class="video-thumb">
-            <img src="${posterSrc}" alt="${session.title}" loading="lazy">
-            <div class="play-icon">▶</div>
-          </div>
-        `;
-        item.onclick = () => openLightbox(index);
+        probe.onloadedmetadata = () => {
+          if (probe.videoWidth / probe.videoHeight > 1.35) item.classList.add('horizontal');
+          item.innerHTML = `
+            <div class="video-thumb">
+              <img src="${posterSrc}" alt="${session.title}" loading="lazy">
+              <div class="play-icon">▶</div>
+            </div>
+          `;
+          item.onclick = () => openLightbox(globalIndex);
+          item.style.opacity = '1';
+        };
+
+        probe.onerror = () => {
+          item.style.display = 'none';
+        };
+        return;
+      }
+
+      const img = new Image();
+      img.src = src;
+
+      img.onload = () => {
+        if (img.naturalWidth / img.naturalHeight > 1.35) item.classList.add('horizontal');
+        item.innerHTML = `<img src="${src}" alt="${session.title}" loading="lazy">`;
+        item.onclick = () => openLightbox(globalIndex);
         item.style.opacity = '1';
       };
 
-      probe.onerror = () => {
+      img.onerror = () => {
         item.style.display = 'none';
       };
-      return;
-    }
+    });
+  }
 
-    const img = new Image();
-    img.src = photoSrc;
+  renderGallery(photos, document.getElementById('session-gallery'), 0);
 
-    img.onload = () => {
-      if (img.naturalWidth / img.naturalHeight > 1.35) item.classList.add('horizontal');
-      item.innerHTML = `<img src="${photoSrc}" alt="${session.title}" loading="lazy">`;
-      item.onclick = () => openLightbox(index);
-      item.style.opacity = '1';
-    };
-
-    img.onerror = () => {
-      item.style.display = 'none';
-    };
-  });
+  if (backstage.length > 0) {
+    document.getElementById('backstage-section').style.display = 'block';
+    renderGallery(backstage, document.getElementById('backstage-gallery'), photos.length);
+  }
 
   function openLightbox(index) {
     currentIndex = index;
@@ -74,7 +85,7 @@ const id = urlParams.get('id');
   }
 
   function updateLightbox() {
-    const src = photos[currentIndex];
+    const src = allMedia[currentIndex];
     const imgEl = document.getElementById('lightbox-img');
     const videoEl = document.getElementById('lightbox-video');
 
@@ -92,16 +103,16 @@ const id = urlParams.get('id');
       videoEl.style.display = 'none';
     }
 
-    document.getElementById('counter').textContent = `${currentIndex + 1} / ${photos.length}`;
+    document.getElementById('counter').textContent = `${currentIndex + 1} / ${allMedia.length}`;
   }
 
   document.getElementById('prev').onclick = () => {
-    currentIndex = (currentIndex - 1 + photos.length) % photos.length;
+    currentIndex = (currentIndex - 1 + allMedia.length) % allMedia.length;
     updateLightbox();
   };
 
   document.getElementById('next').onclick = () => {
-    currentIndex = (currentIndex + 1) % photos.length;
+    currentIndex = (currentIndex + 1) % allMedia.length;
     updateLightbox();
   };
 
@@ -133,9 +144,9 @@ const id = urlParams.get('id');
     if (Math.abs(dx) < 40 || Math.abs(dy) > Math.abs(dx)) return;
 
     if (dx < 0) {
-      currentIndex = (currentIndex + 1) % photos.length;
+      currentIndex = (currentIndex + 1) % allMedia.length;
     } else {
-      currentIndex = (currentIndex - 1 + photos.length) % photos.length;
+      currentIndex = (currentIndex - 1 + allMedia.length) % allMedia.length;
     }
     updateLightbox();
   }, { passive: true });

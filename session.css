@@ -53,6 +53,25 @@ h1 {
   letter-spacing: 0.2em;
 }
 
+.backstage-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.8rem, 5vw, 2.6rem);
+  text-align: center;
+  margin: 6rem 0 2.5rem;
+  color: #8b7355;
+  letter-spacing: 0.2em;
+  position: relative;
+}
+
+.backstage-title::before {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 1px;
+  background: #333;
+  margin: 0 auto 1.5rem;
+}
+
 .gallery {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
