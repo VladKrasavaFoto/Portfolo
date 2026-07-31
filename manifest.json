@@ -11,8 +11,10 @@
         "https://res.cloudinary.com/dufkhpzeg/image/upload/v1785240839/sessions/1/wfm4sxbvgyba9obh2fjn.jpg",
         "https://res.cloudinary.com/dufkhpzeg/image/upload/v1785240844/sessions/1/lmddlgs3hmjiu9mkdnik.jpg",
         "https://res.cloudinary.com/dufkhpzeg/image/upload/v1785240851/sessions/1/gbaictucjfun8lforj5e.jpg",
-        "https://res.cloudinary.com/dufkhpzeg/image/upload/v1785240856/sessions/1/jmu6js8hrwenoo5rriwl.jpg",
-        "https://res.cloudinary.com/dufkhpzeg/video/upload/v1785480402/sessions/1/yghc6b8lpfhxweyxbxhm.mp4"
+        "https://res.cloudinary.com/dufkhpzeg/image/upload/v1785240856/sessions/1/jmu6js8hrwenoo5rriwl.jpg"
+      ],
+      "backstage": [
+        "https://res.cloudinary.com/dufkhpzeg/video/upload/v1785481152/sessions/1/backstage/hhcrdlp1kgp5i6prdbzz.mp4"
       ]
     }
   }
