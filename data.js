@@ -21,12 +21,14 @@ function manifestRawUrl() {
 async function fetchManifest() {
   try {
     const res = await fetch(manifestRawUrl());
-    if (!res.ok) return { sessions: {} }; // манiфесту ще нема — це нормально на старті
+    if (!res.ok) return { sessions: {}, testimonials: [] }; // манiфесту ще нема — це нормально на старті
     const data = await res.json();
-    return data && data.sessions ? data : { sessions: {} };
+    if (!data || !data.sessions) return { sessions: {}, testimonials: [] };
+    if (!data.testimonials) data.testimonials = [];
+    return data;
   } catch (e) {
     console.error('Не вдалося завантажити маніфест сесій:', e);
-    return { sessions: {} };
+    return { sessions: {}, testimonials: [] };
   }
 }
 

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Для моделей · Dark Shibari</title>
+  <meta name="description" content="Умови співпраці для моделей: TFP, безпека, конфіденційність."/>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .models-page { padding: 14vh 6% 10vh; }
+
+    .models-intro {
+      max-width: 780px;
+      margin: 0 auto 5rem;
+      text-align: center;
+      font-size: 1.15rem;
+      color: #bbb;
+    }
+
+    .models-block {
+      max-width: 780px;
+      margin: 0 auto 4rem;
+    }
+
+    .models-block h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.7rem;
+      color: #c9a96e;
+      letter-spacing: 0.08em;
+      margin-bottom: 1.2rem;
+    }
+
+    .models-block p, .models-block li {
+      font-size: 1.05rem;
+      color: #ccc;
+      margin-bottom: 0.8rem;
+    }
+
+    .models-block ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .models-block li {
+      padding-left: 1.4rem;
+      position: relative;
+    }
+
+    .models-block li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: #8b0000;
+    }
+
+    .models-cta {
+      text-align: center;
+      margin-top: 5rem;
+    }
+  </style>
+</head>
+<body>
+
+<header id="header">
+  <a href="index.html" class="logo">SHIBARI·NOIR</a>
+  <nav>
+    <a href="index.html#portfolio">Фотосесії</a>
+    <a href="index.html#about">Про мене</a>
+    <a href="models.html">Для моделей</a>
+    <a href="index.html#contact">Контакт</a>
+  </nav>
+</header>
+
+<main class="models-page">
+  <h1>ДЛЯ МОДЕЛЕЙ</h1>
+
+  <p class="models-intro">
+    Працюю переважно за домовленістю TFP (Time For Prints / творча співпраця без гонорару) —
+    ти отримуєш професійні фото для власного портфоліо, я отримую матеріал для свого.
+    Нижче — чесно про те, як це влаштовано.
+  </p>
+
+  <div class="models-block">
+    <h3>Що ти отримуєш</h3>
+    <ul>
+      <li>Оброблені фото у високій якості — кількість узгоджуємо заздалегідь, до зйомки</li>
+      <li>Право використовувати фото у своєму портфоліо, соцмережах, на модельних платформах</li>
+      <li>Можливість обрати, які кадри з відзнятого йдуть у фінальну обробку</li>
+      <li>Термін готовності обговорюємо наперед і я його дотримуюсь</li>
+    </ul>
+  </div>
+
+  <div class="models-block">
+    <h3>Безпека та комунікація</h3>
+    <ul>
+      <li>9 років досвіду в ню, будуарі та шибарі — техніка в'язки безпечна, з увагою до тіла й кровообігу</li>
+      <li>Усі межі (пози, оголеність, елементи шибарі) обговорюємо і фіксуємо до зйомки — без сюрпризів на локації</li>
+      <li>Працюємо зі стоп-словом, якщо зйомка включає riggerство — можеш зупинити процес у будь-який момент</li>
+      <li>Можеш прийти з довіреною людиною — це нормальна практика, я до цього ставлюсь спокійно</li>
+      <li>Локація й формат зйомки узгоджуються заздалегідь, без змін в останній момент</li>
+    </ul>
+  </div>
+
+  <div class="models-block">
+    <h3>Як проходить співпраця</h3>
+    <ul>
+      <li>Пишеш мені (Telegram чи Instagram) з коротким описом себе, посиланням на портфоліо, якщо є</li>
+      <li>Обговорюємо концепцію, локацію, дату, межі — фіксуємо все текстом</li>
+      <li>Зйомка</li>
+      <li>Ти отримуєш попередню добірку — обираєш кадри для фінальної обробки</li>
+      <li>Отримуєш готові фото в узгоджений термін</li>
+    </ul>
+  </div>
+
+  <div id="testimonials-page" style="display:none;">
+    <div class="models-block">
+      <h3>Відгуки моделей</h3>
+      <div class="testimonials-grid" id="testimonials-grid-page"></div>
+    </div>
+  </div>
+
+  <div class="models-cta">
+    <a href="https://t.me/Foto_vladkrasava" class="btn btn-telegram">НАПИСАТИ В TELEGRAM</a>
+    <a href="https://instagram.com/foto_vladkrasava" class="btn">INSTAGRAM</a>
+  </div>
+</main>
+
+<footer>
+  Made with restraint © 2026
+</footer>
+
+<script src="data.js"></script>
+<script src="main.js"></script>
+<script>
+  (async () => {
+    const manifest = await fetchManifest();
+    const testimonials = manifest.testimonials || [];
+    if (testimonials.length) {
+      const section = document.getElementById('testimonials-page');
+      const grid = document.getElementById('testimonials-grid-page');
+      grid.innerHTML = testimonials.map(t => `
+        <div class="testimonial-card">
+          <p class="testimonial-quote">«${t.quote}»</p>
+          <div class="testimonial-author">${t.name}${t.role ? ` <span>— ${t.role}</span>` : ''}</div>
+        </div>
+      `).join('');
+      section.style.display = '';
+    }
+  })();
+</script>
+</body>
+</html>

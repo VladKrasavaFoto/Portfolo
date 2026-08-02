@@ -20,6 +20,7 @@
   <nav>
     <a href="#portfolio">Фотосесії</a>
     <a href="#about">Про мене</a>
+    <a href="models.html">Для моделей</a>
     <a href="#contact">Контакт</a>
   </nav>
 </header>
@@ -46,6 +47,11 @@
     <p>Я створюю образи, де мотузка стає продовженням тіла, а світло — мовою.</p>
     <p>Кожна зйомка — це довіра, безпека та естетика без компромісів.</p>
   </div>
+</section>
+
+<section id="testimonials" style="display:none;">
+  <h2>Відгуки моделей</h2>
+  <div class="testimonials-grid" id="testimonials-grid"></div>
 </section>
 
 <section id="contact">
@@ -87,6 +93,19 @@
         </a>
       `;
     }).join('');
+
+    const testimonials = manifest.testimonials || [];
+    if (testimonials.length) {
+      const section = document.getElementById('testimonials');
+      const tGrid = document.getElementById('testimonials-grid');
+      tGrid.innerHTML = testimonials.map(t => `
+        <div class="testimonial-card">
+          <p class="testimonial-quote">«${t.quote}»</p>
+          <div class="testimonial-author">${t.name}${t.role ? ` <span>— ${t.role}</span>` : ''}</div>
+        </div>
+      `).join('');
+      section.style.display = '';
+    }
   })();
 </script>
 <script src="//fbstore.sendpulse.com/loader.js" data-sp-widget-id="fb2a4961-cdbf-45dc-95e9-768c866317f5" async></script>

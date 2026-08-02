@@ -175,6 +175,48 @@ h2 {
   font-size:1.18rem;
 }
 
+.testimonials-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(300px,1fr));
+  gap:1.8rem;
+  max-width:1200px;
+  margin:0 auto;
+}
+
+.testimonial-card {
+  background:#0d0d0d;
+  border:1px solid #222;
+  border-radius:8px;
+  padding:2rem;
+  transition:all .3s;
+}
+
+.testimonial-card:hover {
+  border-color:#8b0000;
+}
+
+.testimonial-quote {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.25rem;
+  font-style:italic;
+  color:#d0d0d0;
+  line-height:1.6;
+  margin-bottom:1.2rem;
+}
+
+.testimonial-author {
+  font-size:0.85rem;
+  letter-spacing:0.1em;
+  color:#c9a96e;
+  text-transform:uppercase;
+}
+
+.testimonial-author span {
+  color:#666;
+  text-transform:none;
+  letter-spacing:normal;
+}
+
 .contact-links {
   font-size:1.45rem;
   margin:2.5rem 0;
