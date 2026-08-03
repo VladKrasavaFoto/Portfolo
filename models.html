@@ -6,6 +6,16 @@
   <title>Для моделей · Dark Shibari</title>
   <meta name="description" content="Умови співпраці для моделей: TFP, безпека, конфіденційність."/>
 
+  <!-- ⚠️ Заміни YOUR-DOMAIN-HERE на реальний домен сайту -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Для моделей · Dark Shibari">
+  <meta property="og:description" content="Умови співпраці, TFP та безпека для моделей.">
+  <meta property="og:image" content="https://YOUR-DOMAIN-HERE/hero.webp">
+  <meta property="og:url" content="https://YOUR-DOMAIN-HERE/models.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Для моделей · Dark Shibari">
+  <meta name="twitter:image" content="https://YOUR-DOMAIN-HERE/hero.webp">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
@@ -69,13 +79,15 @@
 
 <header id="header">
   <a href="index.html" class="logo">SHIBARI·NOIR</a>
-  <nav>
+  <nav id="main-nav">
     <a href="index.html#portfolio">Фотосесії</a>
     <a href="index.html#about">Про мене</a>
     <a href="models.html">Для моделей</a>
     <a href="index.html#contact">Контакт</a>
   </nav>
+  <button class="nav-toggle" id="nav-toggle" aria-label="Меню">☰</button>
 </header>
+<div class="nav-overlay" id="nav-overlay"></div>
 
 <main class="models-page">
   <h1>ДЛЯ МОДЕЛЕЙ</h1>

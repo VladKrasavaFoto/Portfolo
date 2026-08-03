@@ -5,6 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dark Shibari · Fine Art Nude & Kinbaku</title>
   <meta name="description" content="Fine art nude, boudoir та shibari фотографія. Конфіденційність та естетика."/>
+
+  <!-- Open Graph / прев'ю при шарингу в Telegram, Instagram, тощо -->
+  <!-- ⚠️ Заміни YOUR-DOMAIN-HERE на реальний домен сайту (Vercel або власний) -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Dark Shibari · Fine Art Nude & Kinbaku">
+  <meta property="og:description" content="Fine art nude, boudoir та shibari фотографія. Конфіденційність та естетика.">
+  <meta property="og:image" content="https://YOUR-DOMAIN-HERE/hero.webp">
+  <meta property="og:url" content="https://YOUR-DOMAIN-HERE/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Dark Shibari · Fine Art Nude & Kinbaku">
+  <meta name="twitter:description" content="Fine art nude, boudoir та shibari фотографія.">
+  <meta name="twitter:image" content="https://YOUR-DOMAIN-HERE/hero.webp">
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,13 +29,15 @@
 
 <header id="header">
   <a href="#" class="logo">SHIBARI·NOIR</a>
-  <nav>
+  <nav id="main-nav">
     <a href="#portfolio">Фотосесії</a>
     <a href="#about">Про мене</a>
     <a href="models.html">Для моделей</a>
     <a href="#contact">Контакт</a>
   </nav>
+  <button class="nav-toggle" id="nav-toggle" aria-label="Меню">☰</button>
 </header>
+<div class="nav-overlay" id="nav-overlay"></div>
 
 <section class="hero">
   <div class="hero-content">
@@ -88,7 +102,7 @@
       const cover = s.cover || (s.photos && s.photos[0]) || '';
       return `
         <a href="session.html?id=${encodeURIComponent(sid)}" class="session-card">
-          <img src="${cover}" alt="${s.title}" loading="lazy">
+          <img src="${cldOptimize(cover, 700)}" alt="${s.title}" loading="lazy">
           <div class="session-title">${s.title}</div>
         </a>
       `;

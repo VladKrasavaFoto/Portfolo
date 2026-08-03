@@ -44,3 +44,12 @@ function isVideoUrl(url) {
 function videoPosterUrl(url) {
   return url.replace(/\.[a-zA-Z0-9]+(?=$|\?)/, '.jpg');
 }
+
+// --- Оптимізація доставки: віддаємо фото/кадри потрібного розміру й формату ---
+// f_auto — сучасний формат (webp/avif) якщо браузер підтримує; q_auto — авто-якість;
+// w_XXXX — ширина, більше за яку немає сенсу вантажити (Cloudinary сам зменшить).
+function cldOptimize(url, width) {
+  if (typeof url !== 'string' || !url.includes('/upload/')) return url;
+  const transform = `f_auto,q_auto,w_${width}`;
+  return url.replace('/upload/', `/upload/${transform}/`);
+}
