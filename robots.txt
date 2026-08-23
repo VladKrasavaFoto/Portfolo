@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://portfolo-ecru.vercel.app/sitemap.xml
+Sitemap: https://lucida.pp.ua/sitemap.xml
