@@ -309,3 +309,9 @@ footer {
     letter-spacing: 0.15em;
   }
 }
+
+@media (max-width: 768px) {
+  .hero {
+    background-attachment: scroll; /* fixed глючить/гальмує на мобільних браузерах */
+  }
+}
