@@ -5,6 +5,12 @@
   box-sizing: border-box;
 }
 
+img, video {
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
 body {
   background: #050505;
   color: #d0d0d0;

@@ -68,7 +68,7 @@ const id = urlParams.get('id');
 
       img.onload = () => {
         if (img.naturalWidth / img.naturalHeight > 1.35) item.classList.add('horizontal');
-        item.innerHTML = `<img src="${cldOptimize(src, 900)}" alt="${session.title}" loading="lazy">`;
+        item.innerHTML = `<img src="${cldOptimize(src, 900, true)}" alt="${session.title}" loading="lazy">`;
         item.onclick = () => openLightbox(globalIndex);
         item.style.opacity = '1';
       };
@@ -107,7 +107,7 @@ const id = urlParams.get('id');
       videoEl.style.display = 'block';
       imgEl.style.display = 'none';
     } else {
-      imgEl.src = cldOptimize(src, 1800);
+      imgEl.src = cldOptimize(src, 1800, true);
       imgEl.style.display = 'block';
       videoEl.style.display = 'none';
     }
