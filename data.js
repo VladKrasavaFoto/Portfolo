@@ -48,8 +48,22 @@ function videoPosterUrl(url) {
 // --- Оптимізація доставки: віддаємо фото/кадри потрібного розміру й формату ---
 // f_auto — сучасний формат (webp/avif) якщо браузер підтримує; q_auto — авто-якість;
 // w_XXXX — ширина, більше за яку немає сенсу вантажити (Cloudinary сам зменшить).
-function cldOptimize(url, width) {
+// watermark=true додає непомітний напівпрозорий підпис у кутку (захист від крадіжки фото).
+function cldOptimize(url, width, watermark) {
   if (typeof url !== 'string' || !url.includes('/upload/')) return url;
-  const transform = `f_auto,q_auto,w_${width}`;
+  let transform = `f_auto,q_auto,w_${width}`;
+  if (watermark) {
+    transform += `/l_text:Arial_16_bold:SHIBARI%C2%B7NOIR,co_rgb:C9A96E,o_45/fl_layer_apply,g_south_east,x_12,y_12`;
+  }
   return url.replace('/upload/', `/upload/${transform}/`);
 }
+
+// --- Базовий захист фото/відео від випадкового копіювання ---
+// Не 100% захист (скріншот завжди можливий), але відсіює просте
+// "зберегти зображення" правою кнопкою чи перетягування в інше вікно.
+document.addEventListener('contextmenu', e => {
+  if (e.target.tagName === 'IMG' || e.target.tagName === 'VIDEO') e.preventDefault();
+});
+document.addEventListener('dragstart', e => {
+  if (e.target.tagName === 'IMG' || e.target.tagName === 'VIDEO') e.preventDefault();
+});
