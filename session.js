@@ -27,7 +27,16 @@ const id = urlParams.get('id');
       item.className = 'gallery-item';
       item.style.opacity = '0';
       item.style.transition = 'opacity 0.4s ease';
+      item.tabIndex = 0;
+      item.setAttribute('role', 'button');
+      item.setAttribute('aria-label', `Відкрити фото ${globalIndex + 1}`);
       item.onclick = () => openLightbox(globalIndex);
+      item.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          openLightbox(globalIndex);
+        }
+      });
       galleryEl.appendChild(item);
 
       if (isVideoUrl(src)) {
