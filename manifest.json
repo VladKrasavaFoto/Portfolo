@@ -17,5 +17,13 @@
         "https://res.cloudinary.com/dufkhpzeg/video/upload/v1785481152/sessions/1/backstage/hhcrdlp1kgp5i6prdbzz.mp4"
       ]
     }
-  }
+  },
+  "testimonials": [
+    {
+      "id": "k1",
+      "name": "тест",
+      "role": "",
+      "quote": "тест"
+    }
+  ]
 }
