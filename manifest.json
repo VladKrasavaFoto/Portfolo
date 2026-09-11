@@ -18,12 +18,5 @@
       ]
     }
   },
-  "testimonials": [
-    {
-      "id": "k1",
-      "name": "тест",
-      "role": "",
-      "quote": "тест"
-    }
-  ]
+  "testimonials": []
 }
