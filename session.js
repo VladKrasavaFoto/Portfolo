@@ -14,11 +14,32 @@ const id = urlParams.get('id');
 
   document.getElementById('session-title').textContent = session.title;
   document.getElementById('page-title').textContent = `${session.title} | Dark Shibari`;
+  hitSessionCounter(id); // рахуємо перегляд (не блокує рендер, помилки ігноруються)
+
+  // Structured data для Google (виконує JS при індексації, на відміну від Telegram/Facebook)
+  const ldScript = document.createElement('script');
+  ldScript.type = 'application/ld+json';
+  ldScript.textContent = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'ImageGallery',
+    'name': session.title,
+    'url': window.location.href,
+    'author': { '@type': 'Person', 'name': 'SHIBARI·NOIR' },
+    'image': [...(session.photos || []), ...(session.groups || []).flatMap(g => g.photos || [])].slice(0, 10)
+  });
+  document.head.appendChild(ldScript);
 
   let currentIndex = 0;
   const photos = session.photos || [];
+  const groups = session.groups || [];
   const backstage = session.backstage || [];
-  const allMedia = [...photos, ...backstage]; // для лайтбоксу — єдиний наскрізний список
+
+  // Наскрізний список для лайтбоксу: основні фото → фото по групах (по порядку) → бекстейдж
+  const allMedia = [
+    ...photos,
+    ...groups.flatMap(g => g.photos || []),
+    ...backstage
+  ];
 
   function renderGallery(items, galleryEl, indexOffset) {
     items.forEach((src, localIndex) => {
@@ -54,6 +75,7 @@ const id = urlParams.get('id');
             </div>
           `;
           item.onclick = () => openLightbox(globalIndex);
+          item.classList.add('loaded');
           item.style.opacity = '1';
         };
 
@@ -70,6 +92,7 @@ const id = urlParams.get('id');
         if (img.naturalWidth / img.naturalHeight > 1.35) item.classList.add('horizontal');
         item.innerHTML = `<img src="${cldOptimize(src, 900, true)}" alt="${session.title}" loading="lazy">`;
         item.onclick = () => openLightbox(globalIndex);
+        item.classList.add('loaded');
         item.style.opacity = '1';
       };
 
@@ -79,11 +102,36 @@ const id = urlParams.get('id');
     });
   }
 
+  // Основна (суцільна) галерея — показуємо тільки якщо в сесії дійсно є "неpозгруповані" фото
   renderGallery(photos, document.getElementById('session-gallery'), 0);
+
+  // Групи (образи/локації) — кожна своя підпис-секція, з наскрізною нумерацією для лайтбоксу
+  let groupOffset = photos.length;
+  const groupsSectionsEl = document.getElementById('groups-sections');
+  groups.forEach(group => {
+    const groupPhotos = group.photos || [];
+    if (groupPhotos.length === 0) return;
+
+    const section = document.createElement('div');
+    section.className = 'group-section';
+
+    const title = document.createElement('h2');
+    title.className = 'section-title';
+    title.textContent = group.title || '';
+    section.appendChild(title);
+
+    const grid = document.createElement('div');
+    grid.className = 'gallery';
+    section.appendChild(grid);
+
+    groupsSectionsEl.appendChild(section);
+    renderGallery(groupPhotos, grid, groupOffset);
+    groupOffset += groupPhotos.length;
+  });
 
   if (backstage.length > 0) {
     document.getElementById('backstage-section').style.display = 'block';
-    renderGallery(backstage, document.getElementById('backstage-gallery'), photos.length);
+    renderGallery(backstage, document.getElementById('backstage-gallery'), groupOffset);
   }
 
   function openLightbox(index) {
