@@ -59,7 +59,7 @@ h1 {
   letter-spacing: 0.2em;
 }
 
-.backstage-title {
+.backstage-title, .section-title {
   font-family: 'Cormorant Garamond', serif;
   font-size: clamp(1.8rem, 5vw, 2.6rem);
   text-align: center;
@@ -69,13 +69,17 @@ h1 {
   position: relative;
 }
 
-.backstage-title::before {
+.backstage-title::before, .section-title::before {
   content: '';
   display: block;
   width: 60px;
   height: 1px;
   background: #333;
   margin: 0 auto 1.5rem;
+}
+
+.group-section:first-child .section-title {
+  margin-top: 2rem;
 }
 
 .gallery {
@@ -95,6 +99,18 @@ h1 {
   cursor: pointer;
   background: #111;
   position: relative;
+  aspect-ratio: 4 / 5; /* заглушка-місце, поки фото не завантажилось — знімається в JS */
+  animation: gallerySkeleton 1.6s ease-in-out infinite;
+}
+
+.gallery-item.loaded {
+  aspect-ratio: auto;
+  animation: none;
+}
+
+@keyframes gallerySkeleton {
+  0%, 100% { background-color: #111; }
+  50% { background-color: #1a1a1a; }
 }
 
 .gallery-item:focus-visible {
