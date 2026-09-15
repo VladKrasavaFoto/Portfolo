@@ -29,3 +29,28 @@ window.addEventListener('scroll', () => {
   overlay.addEventListener('click', closeNav);
   nav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeNav));
 })();
+
+// Плавна поява секцій при скролі
+(() => {
+  const sections = document.querySelectorAll('section:not(.hero)');
+  if (!sections.length) return;
+
+  sections.forEach(s => s.classList.add('reveal'));
+
+  if (!('IntersectionObserver' in window)) {
+    // Немає підтримки — просто показуємо одразу, без анімації
+    sections.forEach(s => s.classList.add('revealed'));
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('revealed');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  sections.forEach(s => observer.observe(s));
+})();

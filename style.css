@@ -1,6 +1,21 @@
 /* style.css */
 * { margin:0; padding:0; box-sizing:border-box; }
 
+::selection {
+  background: #8b0000;
+  color: #e0d0b0;
+}
+
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: #050505; }
+::-webkit-scrollbar-thumb {
+  background: #3a2f22;
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover { background: #c9a96e; }
+
+html { scrollbar-color: #3a2f22 #050505; scrollbar-width: thin; }
+
 img, video {
   -webkit-user-select: none;
   -webkit-user-drag: none;
@@ -13,6 +28,17 @@ body {
   font-family:'Inter',sans-serif;
   line-height:1.6;
   overflow-x:hidden;
+  position:relative;
+}
+
+body::after {
+  content:'';
+  position:fixed;
+  inset:0;
+  z-index:9998;
+  pointer-events:none;
+  opacity:0.035;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 /* Header */
@@ -121,7 +147,9 @@ nav a:hover { color:#e0d0b0; }
 
 .hero::before {
   content:''; position:absolute; inset:0;
-  background:linear-gradient(to bottom,rgba(0,0,0,0.5) 0%,rgba(0,0,0,0.88) 100%);
+  background:
+    linear-gradient(to bottom,rgba(0,0,0,0.5) 0%,rgba(0,0,0,0.88) 100%),
+    radial-gradient(ellipse at center, rgba(0,0,0,0) 40%, rgba(0,0,0,0.55) 100%);
 }
 
 .hero-content { position:relative; z-index:2; max-width:90%; padding:0 6%; }
@@ -175,6 +203,17 @@ h1 {
 /* Секції */
 section { padding:12vh 6% 14vh; }
 
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+
+.reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 h2 {
   font-family:'Cormorant Garamond',serif;
   font-size:clamp(2.4rem,7vw,3.6rem);
@@ -182,6 +221,16 @@ h2 {
   margin-bottom:5rem;
   color:#c9a96e;
   letter-spacing:0.25em;
+  position:relative;
+}
+
+h2::after {
+  content:'';
+  display:block;
+  width:60px;
+  height:1px;
+  background:#8b0000;
+  margin:1.5rem auto 0;
 }
 
 .sessions {
