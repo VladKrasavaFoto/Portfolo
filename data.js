@@ -58,6 +58,34 @@ function cldOptimize(url, width, watermark) {
   return url.replace('/upload/', `/upload/${transform}/`);
 }
 
+// --- Лічильник переглядів сесій (countapi.xyz — безкоштовний, без реєстрації) ---
+// Значення публічні (будь-хто, хто знає ключ, може побачити число), але це просто
+// лічильник переглядів, нічого чутливого. Якщо сервіс колись стане недоступним —
+// лічильник просто перестане оновлюватись, решта сайту на це не впливає.
+
+const COUNTER_NAMESPACE = 'lucida-pp-ua';
+
+// Збільшує лічильник на 1 (викликається на сторінці сесії при перегляді)
+async function hitSessionCounter(sessionId) {
+  try {
+    await fetch(`https://api.countapi.xyz/hit/${COUNTER_NAMESPACE}/session-${sessionId}`);
+  } catch (e) {
+    // тихо ігноруємо — лічильник не критичний для роботи сайту
+  }
+}
+
+// Читає поточне значення без збільшення (використовується в admin.html)
+async function getSessionCounter(sessionId) {
+  try {
+    const res = await fetch(`https://api.countapi.xyz/get/${COUNTER_NAMESPACE}/session-${sessionId}`);
+    if (!res.ok) return null;
+    const data = await res.json();
+    return typeof data.value === 'number' ? data.value : null;
+  } catch (e) {
+    return null;
+  }
+}
+
 // --- Базовий захист фото/відео від випадкового копіювання ---
 // Не 100% захист (скріншот завжди можливий), але відсіює просте
 // "зберегти зображення" правою кнопкою чи перетягування в інше вікно.
