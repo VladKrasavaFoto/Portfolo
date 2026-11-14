@@ -14,7 +14,6 @@ const id = urlParams.get('id');
 
   document.getElementById('session-title').textContent = session.title;
   document.getElementById('page-title').textContent = `${session.title} | Dark Shibari`;
-  hitSessionCounter(id); // рахуємо перегляд (не блокує рендер, помилки ігноруються)
 
   // Structured data для Google (виконує JS при індексації, на відміну від Telegram/Facebook)
   const ldScript = document.createElement('script');
@@ -86,7 +85,7 @@ const id = urlParams.get('id');
       }
 
       const img = new Image();
-      img.src = src;
+      img.src = cldOptimize(src, 900, true);
 
       img.onload = () => {
         if (img.naturalWidth / img.naturalHeight > 1.35) item.classList.add('horizontal');
